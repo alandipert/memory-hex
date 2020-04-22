@@ -16,7 +16,7 @@ welcome_UI <- function(id) {
       tags$p("Click on an hex to return it"),
       tags$p("You can see only two hex at the same time"),
       tags$p("When you're ready, click button below to play !")
-    ), 
+    ),
     footer = actionButton(
       inputId = ns("play"),
       label = "Play !",
@@ -26,15 +26,14 @@ welcome_UI <- function(id) {
   )
 }
 
-welcome <- function(input, output, session) {
-  
-  id <- gsub("-$", "", session$ns(""))
-  showModal(ui = welcome_UI(id))
-  
-  observeEvent(input$play, {
-    removeModal()
-  })
-  
-  return(reactive(input$play))
-}
+welcome <- function(id) {
+  moduleServer(id, function(input, output, session) {
+    showModal(ui = welcome_UI(id))
 
+    observeEvent(input$play, {
+      removeModal()
+    })
+
+    return(reactive(input$play))
+  })
+}

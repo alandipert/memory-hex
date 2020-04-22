@@ -11,7 +11,7 @@ library("shiny")
 
 function(input, output, session) {
 
-  start <- callModule(module = welcome, id = "welcome")
+  start <- welcome(id = gsub("-$", "", session$ns("")))
   timer <- time(id = "timer", start = start)
 
   hex_png <- sample(list.files(path = "www/hex/", pattern = "png$"), n_hex)
