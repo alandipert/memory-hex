@@ -7,9 +7,6 @@ test_that("hex module behaves correctly", {
   block <- reactiveValues(x = NULL)
 
   testServer(hex, {
-
-    expect_equal(hex_logo, !!shiny_logo)
-
     # Initially, hexes are neither found nor visible.
     expect_false(click_status$found)
     expect_false(click_status$show)
@@ -22,15 +19,27 @@ test_that("hex module behaves correctly", {
     session$setInputs(hex_click = input$hex+1)
     expect_false(click_status$show)
 
-    # Click again to make visible
+    # Click again to make visible.
     session$setInputs(hex_click = input$hex+1)
     expect_true(click_status$show)
 
-    # Simulate another module being clicked while this one is still visible.
+    # Become hidden when the board is reset and this hex is visible but not
+    # found.
+    reset$x <- hex_logo
+    shiny:::flushReact()
+    expect_false(click_status$found)
+    expect_false(click_status$show)
+
+    # Become visible once again.
+    session$setInputs(hex_click = input$hex+1)
+    expect_true(click_status$show)
+
+    # Become found and permanently visible after an identical hex is
+    # subsequently discovered.
     block$x <- hex_logo
     shiny:::flushReact()
     expect_true(click_status$found)
-
+    expect_true(click_status$show)
   },
     hex_logo = shiny_logo,
     reset = reset,
