@@ -40,6 +40,14 @@ test_that("hex module behaves correctly", {
     session$flushReact()
     expect_true(click_status$found)
     expect_true(click_status$show)
+
+    # Once the hex is found, more additional clicks do not hide it, and its
+    # status remains found.
+    for (i in 1:10) {
+      session$setInputs(hex_click = input$hex+1)
+      expect_true(click_status$found)
+      expect_true(click_status$show)
+    }
   },
     hex_logo = shiny_logo,
     reset = reset,
