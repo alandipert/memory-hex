@@ -28,6 +28,7 @@ test_that("hex module behaves correctly", {
 
     # Simulate another module being clicked while this one is still visible.
     block$x <- hex_logo
+    shiny:::flushReact()
     expect_true(click_status$found)
 
   },
