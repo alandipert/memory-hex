@@ -26,7 +26,7 @@ test_that("hex module behaves correctly", {
     # Become hidden when the board is reset and this hex is visible but not
     # found.
     reset$x <- hex_logo
-    shiny:::flushReact()
+    session$flushReact()
     expect_false(click_status$found)
     expect_false(click_status$show)
 
@@ -37,7 +37,7 @@ test_that("hex module behaves correctly", {
     # Become found and permanently visible after an identical hex is
     # subsequently discovered.
     block$x <- hex_logo
-    shiny:::flushReact()
+    session$flushReact()
     expect_true(click_status$found)
     expect_true(click_status$show)
   },
