@@ -49,8 +49,10 @@ test_that("hex module behaves correctly", {
       expect_true(click_status$show)
     }
   },
-    hex_logo = shiny_logo,
-    reset = reset,
-    block = block
+    args = list(
+      hex_logo = shiny_logo,
+      reset = reset,
+      block = block
+    )
   )
 })
